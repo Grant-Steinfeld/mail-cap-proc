@@ -57,3 +57,12 @@ the /home/developer/newdev/ directory.  Of course adapt the hostname and path to
 
 breakingnews is a shell script with a python directive
 check it out in this repo
+
+
+
+
+### History of POSTFIX
+``` text
+Originally written in 1997 by Wietse Venema at the IBM Thomas J. Watson Research Center in New York, and first released in December 1998[3], Postfix continues as of 2019 to be actively developed by its creator and other contributors. The software is also known by its former names VMailer and IBM Secure Mailer. 
+```
+[read more on POSTFIX on Wikipedia](https://en.wikipedia.org/wiki/Postfix_(software))
