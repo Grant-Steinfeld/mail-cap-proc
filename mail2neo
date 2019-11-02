@@ -1,0 +1,59 @@
+#!/opt/rangal/apps/python/venv3/bin/python3
+import pika
+import argparse
+from parseMail import mail_parse
+from py2neo import Graph, Node, Relationship
+
+from os import listdir
+from os.path import isfile, join
+
+class Mail2Neo():
+    def __init__(self, hostname='localhost',  path='.', push=False):
+        self.host = hostname
+        self.path = path
+        self.push = push
+
+    def write_mail_to_neo(parsed_mail):
+        g = Graph(password='jy1met2')
+        tx = g.begin()
+        a = Node("Article", **parsed_mail)
+        tx.create(a)
+        tx.commit()
+
+    def run(self):
+        try:
+            self.read_and_push()
+        except Exception as pushex:
+            print(pushex)
+
+    def parse_mail(self, content):
+        return mail_parse(content)
+
+    def read_dir_contents(self, dir_path_):
+        return [f for f in listdir(dir_path_) if isfile(join(dir_path_, f))]
+
+
+    def read_and_push(self):
+        files_ = self.read_dir_contents(self.path)
+        print(" found ", len(files_), " files on " , self.path)
+        for file_ in files_:
+            full_file_path_ = "{}/{}".format(self.path, file_)
+            print(full_file_path_)
+            with open(full_file_path_) as f:
+                file_contents_ = f.read()
+                file_parse = self.parse_mail(file_contents_)
+                print("file parsed: ", file_parse)
+                if self.push:
+                    print("pushing to neo")
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-p', '--path', help='targeted directory to read files from')
+    parser.add_argument('--push', action='store_true', help='activate Q putting')
+    args = parser.parse_args()
+
+    p = Mail2Neo('localhost',args.path, args.push)
+    p.run()
+
+

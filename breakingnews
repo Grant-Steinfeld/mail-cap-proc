@@ -1,0 +1,76 @@
+#!/opt/rangal/apps/python/venv3/bin/python3
+import pika
+import argparse
+from parseMail import mail_parse
+from py2neo import Graph, Node, Relationship
+import sys
+from os import listdir
+from os.path import isfile, join
+import logging
+from logging.handlers import RotatingFileHandler
+
+
+h = RotatingFileHandler('/home/developer/newdev/logs/mailIn.log',maxBytes=100000000, backupCount=12)
+full_mail_handler  = RotatingFileHandler('/home/developer/newdev/logs/verboseMailIn.log',maxBytes=1000000000, backupCount=12)
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+logger.addHandler(h)
+logger_verbose = logging.getLogger('verbose_' + __name__)
+logger_verbose.setLevel(logging.DEBUG)
+logger_verbose.addHandler(full_mail_handler)
+
+
+class Mail2Neo():
+    def __init__(self, hostname='localhost',  path='.', push=False):
+        self.host = hostname
+        self.path = path
+        self.push = push
+
+    def write_mail_to_neo(self, parsed_mail):
+        try:
+            logger.warn("about to write to neo4j")
+            parsed_mail['processor'] = 'breakingnews'
+            g = Graph(password='jy1met2')
+            tx = g.begin()
+            a = Node("Article", **parsed_mail)
+            tx.create(a)
+            tx.commit()
+        except Exception as nex:
+            logger.exception(nex)
+
+
+data = []
+try:
+    param = None
+    for arg in sys.argv[1:]:
+        logger.info(arg)
+        param = arg
+
+    for line in sys.stdin:
+        data.append(line)
+
+    #log entire email
+    logger_verbose.info("\r".join(data))
+    logger_verbose.info("*"*66)
+
+    #invoke the Neo datahandler
+    m2n = Mail2Neo()
+    emailMsg = ''.join(data)
+    #logger.debug(emailMsg)
+    logger.warn("email parsed as such .....")
+    pm = mail_parse(emailMsg)
+    logger.info("")
+
+    if param is not None:
+        pm['x-src-param'] = param
+    else:
+        logger.error("no param from alias dummy")
+
+    logger.info(pm)
+
+    m2n.write_mail_to_neo(pm)
+
+except Exception as exp:
+    logger.exception( exp )
+
+
