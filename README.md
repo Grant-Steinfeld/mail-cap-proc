@@ -57,11 +57,10 @@ newaliases
 so when an email is recived to weather@agentidea.com it will run the script called breakingnews in
 the /home/developer/newdev/ directory.  Of course adapt the hostname and path to be specific to your system setup.
 
-breakingnews is a shell script with a python directive
-check it out in this repo
+`breakingnews` is a shell script with a python directive
 
-
-
+### What next?
+Add a Python Flask interface to your project!  Rough directions are in the [Gandalahar Repo](https://github.com/Grant-Steinfeld/gandalahar) -- send tweets to @gsteinfeld if you need assistence or want to get these instructions out of Beta 
 
 ### History of POSTFIX
 ``` text
