@@ -1,7 +1,7 @@
 # Mail Capture on Linux via POSTFIX
 
 > Capture emails, parse out the text, add them to a Neo4j Graph Database.
-<tbd> add the FlaskAPI reader </tbd>
+> [Add a Python Flask REST API](https://github.com/Grant-Steinfeld/gandalahar) 
 
 ![POSTFIX Neo4j Python CentOS RedHat Logos](https://github.com/Grant-Steinfeld/mail-cap-proc/blob/master/resources/git-hub-header.jpg)
 
@@ -65,6 +65,10 @@ check it out in this repo
 
 ### History of POSTFIX
 ``` text
-Originally written in 1997 by Wietse Venema at the IBM Thomas J. Watson Research Center in New York, and first released in December 1998[3], Postfix continues as of 2019 to be actively developed by its creator and other contributors. The software is also known by its former names VMailer and IBM Secure Mailer. 
+Originally written in 1997 by Wietse Venema at the IBM Thomas J. Watson Research Center
+in New York, and first released in December 1998
+
+ Postfix continues as of 2019 to be actively developed by its creator and other contributors. 
+The software is also known by its former names VMailer and IBM Secure Mailer. 
 ```
 [read more on POSTFIX on Wikipedia](https://en.wikipedia.org/wiki/Postfix_(software))
