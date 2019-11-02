@@ -3,6 +3,8 @@
 > Capture emails, parse out the text, add them to a Neo4j Graph Database.
 <tbd> add the FlaskAPI reader </tbd>
 
+![POSTFIX Neo4j Python CentOS RedHat Logos](https://github.com/Grant-Steinfeld/mail-cap-proc/blob/master/resources/git-hub-header.jpg)
+
 ## Does your server have POSTFIX Mail Transport Agent Running?
 ```sh
 sudo systemctl status postfix
