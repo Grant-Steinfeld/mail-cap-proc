@@ -1,5 +1,8 @@
 # Mail Capture on Linux via POSTFIX
 
+> Capture emails, parse out the text, add them to a Neo4j Graph Database.
+<tbd> add the FlaskAPI reader </tbd>
+
 ## Does your server have POSTFIX Mail Transport Agent Running?
 ```sh
 sudo systemctl status postfix
